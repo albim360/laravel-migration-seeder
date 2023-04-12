@@ -2,64 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Train;
 use Illuminate\Http\Request;
+use App\Models\Treno;
 
 class TrainController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $treniInPartenza = $this->getTreniInPartenza();
+        return view('home', compact('treniInPartenza'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    private function getTreniInPartenza()
     {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Train $train)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Train $train)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Train $train)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Train $train)
-    {
-        //
+        $now = date('Y-m-d H:i:s');
+        return Treno::where('partenza', '>=', $now)->get();
     }
 }
